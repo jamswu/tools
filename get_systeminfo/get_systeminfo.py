@@ -11,6 +11,9 @@ import platform,commands
 def get_platform():
     """system name"""
     return platform.platform()
+def get_python_version():
+    """python_version"""
+    return platform.python_version()
 def get_version():
     """system version"""
     return platform.version()
@@ -307,6 +310,7 @@ def show_info ():
     print"      操作系统的位数:"+ "\033[30;34;1m%s\033[0m" % (get_architecture()[0]).strip()
     print"      操作系统主机名:"+ "\033[30;34;1m%s\033[0m" % (get_node()).strip()
     print"        操作系统类型:"+ "\033[30;34;1m%s\033[0m" % (get_system()).strip()
+    print"        python版本号:"+ "\033[30;34;1m%s\033[0m" % (get_python_version()).strip()
     print"          处理器类型:"+ "\033[30;34;1m%s\033[0m" % (get_processor()).strip()
     print"         cpu详细信息:"+ "\033[30;34;1m%s\033[0m" % (get_detailed_cpu()).strip()
     print"         物理cpu个数:"+ "\033[30;34;1m%s\033[0m" % (get_physical_cpu()).strip()
