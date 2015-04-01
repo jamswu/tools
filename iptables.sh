@@ -64,6 +64,8 @@ iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1023 -j DNAT --t
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1024 -j DNAT --to-destination  10.0.0.4:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1025 -j DNAT --to-destination  10.0.0.5:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.3:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8088 -j DNAT --to-destination  10.0.0.3:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 3306 -j DNAT --to-destination  10.0.0.2:3306
 #ftp 被动模式
 iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 5000:5010 -j ACCEPT  
 iptables -A OUTPUT -p tcp -m state --state NEW -m tcp --dport 5000:5010 -j ACCEPT  

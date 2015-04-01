@@ -4,6 +4,9 @@
 import os
 import pyinotify,re,time,getpass
 import Logger,ConfigParser
+from time import sleep
+from daemonize import Daemonize
+import daemon
 class EventHandler(pyinotify.ProcessEvent,Logger.Logger):
     """Event handing Function"""
     
@@ -67,4 +70,5 @@ def FSMonitor():
             notifier.stop()
             break
 if __name__ == "__main__":
-    FSMonitor()
+    with daemon.DaemonContext():
+        FSMonitor()
