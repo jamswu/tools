@@ -43,8 +43,12 @@ iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT
 iptables -A INPUT -p tcp --dport 5503 -j ACCEPT
+iptables -A INPUT -p tcp --dport 389 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 389 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 5503 -j ACCEPT
 
+iptables -A INPUT -p tcp --dport 636 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 636 -j ACCEPT
 
 
 #屏蔽单个IP的命令是
@@ -58,14 +62,17 @@ iptables -A OUTPUT -p tcp --dport 5503 -j ACCEPT
 #iptables -I INPUT -s 123.45.6.0/24 -j DROP
 
 #端口转发
-iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8080 -j DNAT --to-destination  10.0.0.2:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.2:80
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1022 -j DNAT --to-destination  10.0.0.2:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1023 -j DNAT --to-destination  10.0.0.3:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1024 -j DNAT --to-destination  10.0.0.4:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1025 -j DNAT --to-destination  10.0.0.5:22
-iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.3:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1026 -j DNAT --to-destination  10.0.0.6:22
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8080 -j DNAT --to-destination  10.0.0.3:80
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8088 -j DNAT --to-destination  10.0.0.3:80
+#iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.5:80
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 3306 -j DNAT --to-destination  10.0.0.2:3306
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 389 -j DNAT --to-destination  10.0.0.5:389
 #ftp 被动模式
 iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 5000:5010 -j ACCEPT  
 iptables -A OUTPUT -p tcp -m state --state NEW -m tcp --dport 5000:5010 -j ACCEPT  
