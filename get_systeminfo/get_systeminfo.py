@@ -125,13 +125,13 @@ def get_system_memory():
         else:
             return "UNKNOW"
 def get_system_memory_maximum():
-    system_memory_maximum=commands.getstatusoutput("dmidecode|grep -P 'Maximum\s+Capacity'|awk -F: '{print $2}'")
+    system_memory_maximum=commands.getstatusoutput("dmidecode|grep -P 'Maximum\s+Capacity'|awk -F: '{print $2}'|awk '{sum+=$1}END{print sum,$2}'")
     if system_memory_maximum[0]== 0 and system_memory_maximum[1]:
         return system_memory_maximum[1]
     else:
         return "UNKNOW"
 def get_memory_devices():
-    memory_devices=commands.getstatusoutput("dmidecode|grep -P 'Number Of Devices'|awk -F: '{print $2}'")
+    memory_devices=commands.getstatusoutput("dmidecode|grep -P 'Number Of Devices'|awk '{sum+=$4}END{print sum}'")
     if memory_devices[0]==0 and memory_devices[1]:
         return memory_devices[1]
     else:
