@@ -7,8 +7,8 @@
 echo "install some necessary tools & libs"
 echo '    Install "Development tools"...'
 yum groupinstall "Development tools" -y &>/dev/null
-echo '"Development alread install done."'
-echo '    Install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel... '
+echo 'Development alread install done.'
+echo '    Install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel...'
 yum install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel -y &>/dev/null
 echo 'openssl-devel zlib-devel...already install done.'
 echo '    Install libtool-ltdl-devel sqlite-devel tk-devel tcl-devel...'
