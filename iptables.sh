@@ -12,13 +12,13 @@ iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 iptables -A INPUT -p tcp  --dport 9200 -j ACCEPT
-iptables -A OUTPUT -p tcp  --dport 9200 -j ACCEPT
+iptables -A OUTPUT -p tcp  --sport 9200 -j ACCEPT
 #允许本机访问本机
 iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
 #开放端口
 for port in 80 8080 8081 139 445 6001 9000 21 5503 389 636:
     do
-        iptables -A INPUT -p tcp --sport $port -j ACCEPT
+        iptables -A INPUT -p tcp --dport $port -j ACCEPT
         iptables -A OUTPUT -p tcp --sport $port -j ACCEPT
     done
 
@@ -31,12 +31,17 @@ for port in 80 8080 8081 139 445 6001 9000 21 5503 389 636:
 #封IP段即从123.45.6.1到123.45.6.254的命令是
 #iptables -I INPUT -s 123.45.6.0/24 -j DROP
 #端口转发
-iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.2:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.6:80
+#iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8080 -j DNAT --to-destination  10.0.0.5:80
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8000 -j DNAT --to-destination  10.0.0.6:8000
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1022 -j DNAT --to-destination  10.0.0.2:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1023 -j DNAT --to-destination  10.0.0.3:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1024 -j DNAT --to-destination  10.0.0.4:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1025 -j DNAT --to-destination  10.0.0.5:22
 iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1026 -j DNAT --to-destination  10.0.0.6:22
+iptables -t nat -A POSTROUTING -d 10.0.0.6 -p tcp --dport 22 -j SNAT --to-source 10.0.0.1
+iptables -t nat -A POSTROUTING -d 10.0.0.6 -p tcp --dport 80 -j SNAT --to-source 10.0.0.1
+iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 1027 -j DNAT --to-destination  54.241.15.17:22
 #iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8080 -j DNAT --to-destination  10.0.0.3:80
 #iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 8088 -j DNAT --to-destination  10.0.0.3:80
 #iptables -t nat -A PREROUTING -d www.xingcai.com -p tcp --dport 80 -j DNAT --to-destination  10.0.0.5:80
