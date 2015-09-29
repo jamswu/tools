@@ -18,6 +18,7 @@ class EventHandler(pyinotify.ProcessEvent,Logger.Logger):
         Logger.Logger.__init__(self,path,dlevel,console)
         if len(path.split("/")[-1]) >= 1:
             file_path=path.split("/")[-1]
+	    print file_path
         else:
             file_path=path.split("/")[-2]
         self.exclude_file=re.compile(".+\.swp$|.+\.swx$|.+\.swpx$|.+4913$|.+\.tmp$|.+\.viminfo$|.+~|.+%s" % file_path)
@@ -49,15 +50,19 @@ def FSMonitor():
     except OSError,e:
         print str(e)
         sys.exit()
+    print exclude_file
     wm=pyinotify.WatchManager()
     mask = pyinotify.IN_MODIFY |pyinotify.IN_CREATE|pyinotify.IN_DELETE
     event_handler=EventHandler(log_path,dlevel=dis_level,console=dis_console)
     notifier = pyinotify.Notifier(wm,event_handler)
-    if len(exclude_file) > 1: 
+    if len(exclude_file) >= 1: 
         excl_lst=exclude_file
+        print excl_lst
     else:
         excl_lst=["/test"]
+        print excl_lst
     excl = pyinotify.ExcludeFilter(excl_lst)
+    print excl
     wm.add_watch(monitor_file,mask,rec=True,exclude_filter=excl)
     message="now starting monitor %s" % monitor_file
     event_handler.info(message) 

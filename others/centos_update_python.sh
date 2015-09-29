@@ -5,9 +5,15 @@
 
 # install some necessary tools & libs
 echo "install some necessary tools & libs"
-yum groupinstall "Development tools" -y
-yum install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel -y
-yum install libtool-ltdl-devel sqlite-devel tk-devel tcl-devel -y
+echo '    Install "Development tools"...'
+yum groupinstall "Development tools" -y &>/dev/null
+echo 'Development alread install done.'
+echo '    Install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel...'
+yum install openssl-devel zlib-devel ncurses-devel bzip2-devel readline-devel -y &>/dev/null
+echo 'openssl-devel zlib-devel...already install done.'
+echo '    Install libtool-ltdl-devel sqlite-devel tk-devel tcl-devel...'
+yum install libtool-ltdl-devel sqlite-devel tk-devel tcl-devel -y &> /dev/null
+echo 'libtool-ltdl-devel...already install done.'
 sleep 5
 
 # download and install python
@@ -25,12 +31,12 @@ fi
 
 echo "download/build/install your python"
 cd /tmp
-wget $python_url
+wget $python_url >/dev/null
 tar -zxf Python-${version}.tgz
 cd Python-${version}
-./configure
-make -j 4
-make install
+./configure >/dev/null
+make -j 4 >/dev/null
+make install >/dev/null
 sleep 5
 
 echo "check your installed python"
@@ -47,15 +53,15 @@ sleep 5
 
 # install setuptools
 echo "install setuptools"
-wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
-python ez_setup.py
+wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py >/dev/null
+python ez_setup.py >dev/null
 # check easy_install version
-easy_install --version
+easy_install --version >dev/null
 sleep 5
 
 # install pip for the new python
 echo "install pip for the new python"
-easy_install pip
+easy_install pip >dev/null
 # check pip version
 pip -V
 
