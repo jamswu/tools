@@ -7,8 +7,8 @@ from email.mime.text import MIMEText
 import sys 
  
 mail_server = "smtp.126.com" 
-mail_user = 'asdfwujian' 
-mail_pass = 'wj4768593'
+mail_user = 'testtest' 
+mail_pass = 'testtest'
 mail_postfix = '126.com'
 mail_server_port=25 
  
@@ -36,9 +36,9 @@ def send():
     subject = 'python email test'
     me="文件监控"+"<"+mail_user+"@"+mail_postfix+">"
     fo=open("360.htm","rb")
-    to_list=["jams_wu@126.com"]
-    cc=["asdfwujian@163.com"]
-    bcc=["asdfwujian@126.com"]
+    to_list=["test@126.com"]
+    cc=["testtest@163.com"]
+    bcc=["test123@126.com"]
     #mail_content = '<html><h1>你好</h1></html>' # email内容
     COMESPACE=','
     mail_content = fo.read() # email内容
